@@ -6,6 +6,7 @@ if (localStorage.getItem('baseUrl') === null) {
 let baseUrl = localStorage.getItem("baseUrl");
 
 function setBaseUrl(u) {
+    if (!u.endsWith("/")) u += "/";
     baseUrl = u;
     localStorage.setItem("baseUrl", u);
 }
