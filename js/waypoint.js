@@ -125,4 +125,5 @@ setupWebsocket();
 async function wsReconnect() {
   await waypoints.update();
   setupWebsocket();
+  render();
 }
