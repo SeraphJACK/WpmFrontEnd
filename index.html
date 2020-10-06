@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+  />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <title>Waypoint Manager</title>
+  <link rel="stylesheet" href="css/nano.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div style="cursor: grab;">
+  <canvas></canvas>
+</div>
+<div id="control">
+  <div>
+    <span>Dim: </span>
+    <select id="dimension" value="0" onchange="switchDimension()"> </select>
+  </div>
+  <br/>
+  <div>
+    <span>Scale: </span>
+    <input type="button" value="[+] " onclick="adjustScale(0.5)"/>
+    <input type="button" value=" [-]" onclick="adjustScale(-0.5)"/>
+  </div>
+</div>
+<div id="detail" class="hide">
+  <div><span>Name: </span><span id="detail-name"></span></div>
+  <div><span>X: </span><span id="detail-x"></span></div>
+  <div><span>Y: </span><span id="detail-y"></span></div>
+  <div><span>Z: </span><span id="detail-z"></span></div>
+</div>
+<div class="hide" id="rmenu">
+  <div class="hide">
+    <button id="menu-toggle-availability" onclick="toggleAvailability()">
+      Toggle availability
+    </button>
+  </div>
+  <div class="hide">
+    <button id="menu-edit" onclick="editWaypoint()">
+      Edit waypoint
+    </button>
+  </div>
+  <div class="hide">
+    <button id="menu-remove" onclick="removeWaypoint()">
+      Delete waypoint
+    </button>
+  </div>
+  <div class="hide">
+    <button id="menu-add-waypoint" onclick="addWaypoint()">
+      Add Waypoint
+    </button>
+  </div>
+</div>
+<div id="edit" class="hide">
+  <div>
+    <button class="small" onclick="toggleEdit()">[x]</button>
+  </div>
+  <div><span>Name:&nbsp;</span><input type="text" id="edit-name"/></div>
+  <div class="hide">
+    <span>X:&nbsp;</span><input type="text" id="edit-x"/>
+  </div>
+  <div class="hide">
+    <span>Y:&nbsp;</span><input type="text" id="edit-y"/>
+  </div>
+  <div class="hide">
+    <span>Z:&nbsp;</span><input type="text" id="edit-z"/>
+  </div>
+  <div>
+    <span>Color:&nbsp;</span>
+    <div id="edit-color">
+      <div></div>
+    </div>
+  </div>
+  <div>
+        <span>Available:&nbsp;</span
+        ><input type="checkbox" id="edit-available"/>
+  </div>
+  <div id="edit-button" class="submit">
+    <button onclick="submitEdit()">Submit</button>
+  </div>
+</div>
+<div id="ws-status-bar">
+  <span>WS Status: </span>
+  <a onclick="wsReconnect()"><span id="ws-status" class="connecting"></span></a>
+</div>
+<a id="options" href="configure.html">
+  <svg height="20px" viewBox="0 0 512 512" width="20px" xmlns="http://www.w3.org/2000/svg">
+    <path d="m499.953125 197.703125-39.351563-8.554687c-3.421874-10.476563-7.660156-20.695313-12.664062-30.539063l21.785156-33.886719c3.890625-6.054687 3.035156-14.003906-2.050781-19.089844l-61.304687-61.304687c-5.085938-5.085937-13.035157-5.941406-19.089844-2.050781l-33.886719 21.785156c-9.84375-5.003906-20.0625-9.242188-30.539063-12.664062l-8.554687-39.351563c-1.527344-7.03125-7.753906-12.046875-14.949219-12.046875h-86.695312c-7.195313 0-13.421875 5.015625-14.949219 12.046875l-8.554687 39.351563c-10.476563 3.421874-20.695313 7.660156-30.539063 12.664062l-33.886719-21.785156c-6.054687-3.890625-14.003906-3.035156-19.089844 2.050781l-61.304687 61.304687c-5.085937 5.085938-5.941406 13.035157-2.050781 19.089844l21.785156 33.886719c-5.003906 9.84375-9.242188 20.0625-12.664062 30.539063l-39.351563 8.554687c-7.03125 1.53125-12.046875 7.753906-12.046875 14.949219v86.695312c0 7.195313 5.015625 13.417969 12.046875 14.949219l39.351563 8.554687c3.421874 10.476563 7.660156 20.695313 12.664062 30.539063l-21.785156 33.886719c-3.890625 6.054687-3.035156 14.003906 2.050781 19.089844l61.304687 61.304687c5.085938 5.085937 13.035157 5.941406 19.089844 2.050781l33.886719-21.785156c9.84375 5.003906 20.0625 9.242188 30.539063 12.664062l8.554687 39.351563c1.527344 7.03125 7.753906 12.046875 14.949219 12.046875h86.695312c7.195313 0 13.421875-5.015625 14.949219-12.046875l8.554687-39.351563c10.476563-3.421874 20.695313-7.660156 30.539063-12.664062l33.886719 21.785156c6.054687 3.890625 14.003906 3.039063 19.089844-2.050781l61.304687-61.304687c5.085937-5.085938 5.941406-13.035157 2.050781-19.089844l-21.785156-33.886719c5.003906-9.84375 9.242188-20.0625 12.664062-30.539063l39.351563-8.554687c7.03125-1.53125 12.046875-7.753906 12.046875-14.949219v-86.695312c0-7.195313-5.015625-13.417969-12.046875-14.949219zm-152.160156 58.296875c0 50.613281-41.179688 91.792969-91.792969 91.792969s-91.792969-41.179688-91.792969-91.792969 41.179688-91.792969 91.792969-91.792969 91.792969 41.179688 91.792969 91.792969zm0 0"/>
+  </svg>
+</a>
+<script src="js/urls.js"></script>
+<script src="js/pickr.min.js"></script>
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/config.js"></script>
+<script src="js/waypoint.js"></script>
+<script src="js/canvas.js"></script>
+
+</body>
+</html>

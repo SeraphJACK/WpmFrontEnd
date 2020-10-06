@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configure</title>
+</head>
+<body>
+<h1 id="title">Configurations</h1>
+<div id="configure-box">
+  <div id="content">
+    <div class="entry">
+      <label for="baseUrl">Backend BaseUrl: </label><input type="text" name="baseUrl" id="baseUrl">
+    </div>
+    <div class="entry">
+      <label for="auth">WPM Auth: </label><input type="text" name="auth" id="auth">
+    </div>
+    <button id="save" onclick="save()">Save</button>
+  </div>
+</div>
+
+<script src="js/urls.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/config.js"></script>
+<script>
+  let burl = document.getElementById('baseUrl');
+  burl.value = localStorage.getItem("baseUrl");
+  burl.onchange = () => {
+    setBaseUrl(burl.value);
+    console.log("Saved");
+  }
+  document.getElementById('auth').value = config.auth;
+  function save() {
+    setBaseUrl(document.getElementById('baseUrl').value);
+    config.auth = document.getElementById('auth').value;
+    config.persist();
+    document.location.href = ".";
+  }
+</script>
+</body>
+<style>
+    #title {
+        text-align: center;
+    }
+
+    #configure-box {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        align-self: center;
+        justify-content: center;
+    }
+
+    #configure-box label {
+        padding-right: 1rem;
+    }
+
+    .entry {
+        margin-top: 4px;
+    }
+
+    #save {
+        font-size: large;
+        margin: 1rem auto;
+        display: block;
+        padding: 6px;
+        border-style: none;
+        border-radius: 4px;
+        color: #ffffff;
+        background-color: rgba(28, 28, 28, 0.8);
+    }
+</style>
+</html>
