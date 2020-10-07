@@ -23,21 +23,20 @@ function updateList() {
 }
 
 function clearList() {
-  while (list.firstChild) list.lastChild.remove();
+  list.innerHTML = "";
 }
 
 function appendList(wp) {
   let e = document.createElement("li");
 
-  let name = document.createElement("p");
+  let name = document.createElement("span");
   name.innerText = wp.name;
   e.appendChild(name);
 
-  let id = document.createElement("p");
+  let id = document.createElement("span");
   id.innerText = wp.identifier;
   e.appendChild(id);
 
-  e.id = wp.identifier;
   e.onclick = () => handleListClick(e);
   list.appendChild(e);
 }

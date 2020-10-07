@@ -144,7 +144,7 @@ function adjustScale(diff, isButton = true) {
   render();
 }
 
-document.addEventListener("wheel", event => {
+document.querySelector('canvas').addEventListener("wheel", event => {
   adjustScale(0.2 * (event.deltaY > 0 ? -1 : 1), false);
 });
 
