@@ -46,6 +46,7 @@ function handleListClick(id) {
   config.nowChunkX = wp.x >> 4;
   config.nowChunkZ = wp.z >> 4;
   config.offsetX = config.offsetZ = 0;
+  config.persist();
   render();
   hide('list');
 }
