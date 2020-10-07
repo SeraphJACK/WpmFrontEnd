@@ -37,12 +37,12 @@ function appendList(wp) {
   id.innerText = wp.identifier;
   e.appendChild(id);
 
-  e.onclick = () => handleListClick(e);
+  e.onclick = () => handleListClick(wp.identifier);
   list.appendChild(e);
 }
 
-function handleListClick(e) {
-  let wp = waypoints.getI(e.id);
+function handleListClick(id) {
+  let wp = waypoints.getI(id);
   config.nowChunkX = wp.x >> 4;
   config.nowChunkZ = wp.z >> 4;
   config.offsetX = config.offsetZ = 0;
