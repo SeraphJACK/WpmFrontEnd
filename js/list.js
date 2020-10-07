@@ -1,6 +1,7 @@
 // Waypoint List
 function toggleList() {
   if (document.getElementById('list').classList.contains('hide')) {
+    document.getElementById('search').value = "";
     updateList();
     show('list');
   } else {
@@ -51,4 +52,4 @@ function handleListClick(id) {
   hide('list');
 }
 
-document.getElementById('search').onchange = updateList
+document.getElementById('search').oninput = updateList
