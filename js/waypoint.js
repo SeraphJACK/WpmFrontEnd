@@ -110,6 +110,7 @@ function setupWebsocket() {
   ws.addEventListener('message', (event) => {
     // console.log(event.data)
     let msg = JSON.parse(event.data);
+    if (msg.dim !== config.dim) return;
     if (msg.type === 1) {
       waypoints.map.delete(msg.identifier);
     } else if (msg.type === 0 || msg.type === 2) {
